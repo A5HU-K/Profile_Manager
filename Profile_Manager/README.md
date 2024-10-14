@@ -1,2 +1,2 @@
-# Profile_Manager
+# Profile Manager
 Profile Management Service
