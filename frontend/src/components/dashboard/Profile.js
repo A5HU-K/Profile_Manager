@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import api from "../utils/api";
-import DashboardLayout from "./componenets/layout/DashboardLayout";
+import DashboardLayout from "./components/layout/DashboardLayout";
 
 function Profile() {
   const { user, setUser } = useContext(AuthContext);
@@ -45,7 +45,13 @@ function Profile() {
         <div className="field">
           <label className="label">Name</label>
           <div className="control">
-            <input className="input" type="text" placeholder="Your Name" />
+            <input
+              className="input"
+              type="text"
+              placeholder="Your Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
         </div>
         <div className="field">
@@ -55,6 +61,8 @@ function Profile() {
               className="input"
               type="email"
               placeholder="your.email@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
         </div>

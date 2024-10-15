@@ -8,7 +8,6 @@ const inputSanitizer = require("./middleware/inputSanitizer");
 const helmet = require("helmet");
 const csrf = require("csurf");
 const csrfProtection = csrf({ cookie: true });
-const { handleError } = require('./utils/errorHandler');
 
 const app = express();
 
@@ -36,17 +35,13 @@ app.use(
 // Routes
 app.use("/api/users/auth", authRoutes);
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  handleError(err, res);
-});
-
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
+// Error handling middleware
 app.use((err, req, res, next) => {
   handleError(err, res);
 });

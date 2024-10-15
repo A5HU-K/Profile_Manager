@@ -1,13 +1,35 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-// import { Link } from "react-router-dom";
-import DashboardLayout from ".components/layout/DashboardLayout";
+import { Link } from "react-router-dom";
+import DashboardLayout from "./components/layout/DashboardLayout";
+
 function Dashboard() {
   const { user, logout } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Simulate loading and error handling
+    const fetchData = async () => {
+      try {
+        // Simulate an API call or data fetching
+        // If there's an error, set it here
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to load user data."); // Set error message
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <DashboardLayout>
-      {user ? (
+      {loading ? (
+        <progress className="progress is-large is-info" max="100">
+          Loading...
+        </progress>
+      ) : user ? (
         <div>
           <h1 className="title">Welcome, {user.name}!</h1>
           <div className="box">
@@ -35,12 +57,8 @@ function Dashboard() {
             </div>
           </div>
         </div>
-      ) : error ? (
-        <div className="notification is-danger">{error}</div>
       ) : (
-        <progress className="progress is-large is-info" max="100">
-          60%
-        </progress>
+        <div className="notification is-danger">{error}</div>
       )}
     </DashboardLayout>
   );

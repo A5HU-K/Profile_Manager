@@ -170,3 +170,106 @@ exports.resetPassword = async (req, res, next) => {
     next(new AppError(err.message, 500));
   }
 };
+
+exports.getMe = async (req, res) => {
+  console.log("getMe function executed");
+  console.log("Fetching user information for:", req.user.id);
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    if (!user) {
+      console.log("User not found:", req.user.name);
+      return res.status(404).json({ message: "User not found" });
+    }
+    console.log("User information retrieved successfully:", user.email);
+    res
+      .status(200)
+      .json({ user: { id: user._id, name: user.name, email: user.email } });
+  } catch (error) {
+    console.error("Error fetching user information:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+// Handler to update user information
+exports.updateMe = async (req, res) => {
+  try {
+    // Ensure that the user is logged in and req.user is available
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        name: req.body.name,
+        email: req.body.email,
+        // You can add more fields to update as needed
+      },
+      {
+        new: true, // Return the updated document
+        runValidators: true, // Validate the data against the model
+      }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        status: "fail",
+        message: "User not found",
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        user: updatedUser,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      message: error.message,
+    });
+  }
+};
+
+// Handler to update user password
+exports.updatePassword = async (req, res) => {
+  try {
+    // Find the user by ID
+    const user = await User.findById(req.user.id).select("+password");
+
+    // Check if the current password is correct
+    if (
+      !(await user.correctPassword(req.body.currentPassword, user.password))
+    ) {
+      return res.status(401).json({
+        status: "fail",
+        message: "Current password is incorrect",
+      });
+    }
+
+    // Update the password
+    user.password = req.body.newPassword;
+    user.passwordConfirm = req.body.newPasswordConfirm; // Assuming you have a confirm field
+    await user.save();
+
+    // Send the token back to the user
+    createSendToken(user, 200, res);
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      message: error.message,
+    });
+  }
+};
+
+// Handler to delete the current user
+exports.deleteMe = async (req, res, next) => {
+  try {
+    // Find the user by ID and delete
+    await User.findByIdAndDelete(req.user.id);
+
+    res.status(204).json({
+      status: "success",
+      message: "User deleted successfully",
+    });
+  } catch (error) {
+    next(new AppError(error.message, 500));
+  }
+};

@@ -1,6 +1,6 @@
 const validator = require("validator");
 
-const sanitizeInput = (obj) => {
+const inputSanitizer = (obj) => {
   const sanitized = {};
   for (const [key, value] of Object.entries(obj)) {
     if (typeof value === "string") {
