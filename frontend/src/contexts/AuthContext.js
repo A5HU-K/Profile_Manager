@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { getMe } from "../services/api";
+import api from "../utils/api";
 
 export const AuthContext = createContext();
 
@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem("token");
       if (token) {
         try {
-          const response = await getMe();
+          const response = await api.getMe();
           setUser(response.data.data.user);
         } catch (error) {
           console.error("Failed to load user:", error);
