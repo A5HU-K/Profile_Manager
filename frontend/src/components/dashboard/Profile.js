@@ -26,7 +26,7 @@ function Profile() {
         name,
         email,
       });
-      setUser(response.data.data.user);
+      setUser(response.data.user);
       setMessage("Profile updated successfully");
     } catch (err) {
       setError(

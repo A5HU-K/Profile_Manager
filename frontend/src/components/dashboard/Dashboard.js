@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import DashboardLayout from ".components/layout/DashboardLayout";
 function Dashboard() {
   const { user, logout } = useContext(AuthContext);

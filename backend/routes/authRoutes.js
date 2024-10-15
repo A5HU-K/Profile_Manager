@@ -1,7 +1,6 @@
 const apiLimiter = require("../middleware/rateLimiter");
 const express = require("express");
 const v1Routes = require("./v1"); //Implement API Versioning: Version your API to maintain backwards compatibility:
-const express = require("express");
 const authController = require("../controllers/authController");
 
 const router = express.Router();
