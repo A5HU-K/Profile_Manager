@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import DashboardLayout from "./components/layout/DashboardLayout";
 
 function Dashboard() {
-  const { user, logout } = useContext(AuthContext);
+  const { user} = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
