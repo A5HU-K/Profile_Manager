@@ -1,22 +1,19 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-// import { Link } from "react-router-dom";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 
 function Dashboard() {
-  const { user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Simulate loading and error handling
     const fetchData = async () => {
       try {
         // Simulate an API call or data fetching
-        // If there's an error, set it here
         setLoading(false);
       } catch (err) {
-        setError("Failed to load user data."); // Set error message
+        setError("Failed to load user data.");
         setLoading(false);
       }
     };
@@ -37,7 +34,6 @@ function Dashboard() {
             <p>
               <strong>Email:</strong> {user.email}
             </p>
-            {/* Add more user details here */}
           </div>
           <div className="columns">
             <div className="column">

@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Sidebar() {
-  // const navigate = useNavigate();
   return (
     <aside className="menu p-4">
       <p className="menu-label">User</p>

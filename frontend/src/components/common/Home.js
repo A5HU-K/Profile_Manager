@@ -4,7 +4,7 @@ import "bulma/css/bulma.min.css";
 
 function Home() {
   return (
-    <section className="hero is-fullheight  is-bold">
+    <section className="hero is-fullheight is-bold">
       <div className="hero-body">
         <div className="container">
           <h1 className="title is-1 has-text-centered">

@@ -5,10 +5,7 @@ import Sidebar from "../common/Sidebar";
 
 function DashboardLayout({ children }) {
   return (
-    <div
-      className="has-background-light"
-      style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
-    >
+    <div className="has-background-light" style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <Header />
       <div className="columns is-gapless" style={{ flex: 1 }}>
         <Sidebar />
