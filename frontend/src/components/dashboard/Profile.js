@@ -16,6 +16,9 @@ function Profile() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [currentPassword, setCurrentPassword] = useState(""); // Added for current password
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [currentPassword, setCurrentPassword] = useState(""); // Added for current password
 
   useEffect(() => {
     if (user) {
@@ -25,9 +28,17 @@ function Profile() {
   }, [user]);
 
   const handleProfileSubmit = async (e) => {
+  const handleProfileSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
     setError("");
+
+    const validationError = validateProfileData(name, email);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
 
     const validationError = validateProfileData(name, email);
     if (validationError) {
@@ -42,6 +53,52 @@ function Profile() {
       });
       setUser(response.data.user);
       setMessage("Profile updated successfully");
+    } catch (err) {
+      setError(err.response?.data?.message || "An error occurred. Please try again.");
+    }
+  };
+
+  const handlePasswordReset = async (e) => {
+    e.preventDefault();
+    setMessage("");
+    setError("");
+
+    const passwordError = validatePasswordReset(newPassword, confirmPassword);
+    if (passwordError) {
+      setError(passwordError);
+      return;
+    }
+
+    try {
+      const response = await api.patch("/api/users/auth/updateMyPassword", {
+        currentPassword,
+        newPassword,
+        confirmPassword,
+      });
+      setMessage("Password reset successfully");
+    } catch (err) {
+      setError(err.response?.data?.message || "An error occurred. Please try again.");
+    }
+  };
+
+  const handlePasswordReset = async (e) => {
+    e.preventDefault();
+    setMessage("");
+    setError("");
+
+    const passwordError = validatePasswordReset(newPassword, confirmPassword);
+    if (passwordError) {
+      setError(passwordError);
+      return;
+    }
+
+    try {
+      const response = await api.patch("/api/users/auth/updateMyPassword", {
+        currentPassword,
+        newPassword,
+        confirmPassword,
+      });
+      setMessage("Password reset successfully");
     } catch (err) {
       setError(
         err.response?.data?.message || "An error occurred. Please try again."
@@ -121,6 +178,49 @@ function Profile() {
 
       <div className="box mt-5">
         <h2 className="subtitle">Password Reset</h2>
+        <form onSubmit={handlePasswordReset}>
+          <div className="field">
+            <label className="label">Current Password</label>
+            <div className="control">
+              <input
+                className="input"
+                type="password"
+                placeholder="Current Password"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="field">
+            <label className="label">New Password</label>
+            <div className="control">
+              <input
+                className="input"
+                type="password"
+                placeholder="New Password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="field">
+            <label className="label">Confirm New Password</label>
+            <div className="control">
+              <input
+                className="input"
+                type="password"
+                placeholder="Confirm New Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="field">
+            <div className="control">
+              <button className="button is-primary">Reset Password</button>
+            </div>
+          </div>
+        </form>
         <form onSubmit={handlePasswordReset}>
           <div className="field">
             <label className="label">Current Password</label>
