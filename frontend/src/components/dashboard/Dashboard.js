@@ -5,7 +5,6 @@ import DashboardLayout from "../../components/layout/DashboardLayout";
 
 function Dashboard() {
   const { user} = useContext(AuthContext);
-  const { user} = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 

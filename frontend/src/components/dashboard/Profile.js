@@ -16,9 +16,6 @@ function Profile() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [currentPassword, setCurrentPassword] = useState(""); // Added for current password
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [currentPassword, setCurrentPassword] = useState(""); // Added for current password
 
   useEffect(() => {
     if (user) {
@@ -28,17 +25,9 @@ function Profile() {
   }, [user]);
 
   const handleProfileSubmit = async (e) => {
-  const handleProfileSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
     setError("");
-
-    const validationError = validateProfileData(name, email);
-    if (validationError) {
-      setError(validationError);
-      return;
-    }
-
 
     const validationError = validateProfileData(name, email);
     if (validationError) {
@@ -53,52 +42,6 @@ function Profile() {
       });
       setUser(response.data.user);
       setMessage("Profile updated successfully");
-    } catch (err) {
-      setError(err.response?.data?.message || "An error occurred. Please try again.");
-    }
-  };
-
-  const handlePasswordReset = async (e) => {
-    e.preventDefault();
-    setMessage("");
-    setError("");
-
-    const passwordError = validatePasswordReset(newPassword, confirmPassword);
-    if (passwordError) {
-      setError(passwordError);
-      return;
-    }
-
-    try {
-      const response = await api.patch("/api/users/auth/updateMyPassword", {
-        currentPassword,
-        newPassword,
-        confirmPassword,
-      });
-      setMessage("Password reset successfully");
-    } catch (err) {
-      setError(err.response?.data?.message || "An error occurred. Please try again.");
-    }
-  };
-
-  const handlePasswordReset = async (e) => {
-    e.preventDefault();
-    setMessage("");
-    setError("");
-
-    const passwordError = validatePasswordReset(newPassword, confirmPassword);
-    if (passwordError) {
-      setError(passwordError);
-      return;
-    }
-
-    try {
-      const response = await api.patch("/api/users/auth/updateMyPassword", {
-        currentPassword,
-        newPassword,
-        confirmPassword,
-      });
-      setMessage("Password reset successfully");
     } catch (err) {
       setError(
         err.response?.data?.message || "An error occurred. Please try again."
