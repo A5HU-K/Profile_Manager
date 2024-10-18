@@ -35,7 +35,7 @@ Profile Manager is a web application designed to manage user profiles efficientl
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/Profile_Manager.git
+   git clone https://github.com/A5HU-K/Profile_Manager.git
    cd Profile_Manager
    ```
 
