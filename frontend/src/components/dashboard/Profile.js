@@ -1,8 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
-import { AuthContext } from "./contexts/AuthContext";
-import api from "./utils/api";
-import DashboardLayout from "./components/layout/DashboardLayout";
-import { validateProfileData, validatePasswordReset } from "./utils/profileUtils";
+import { AuthContext } from "../../contexts/AuthContext";
+import api from "../../utils/api";
+import DashboardLayout from "../layout/DashboardLayout";
+import {
+  validateProfileData,
+  validatePasswordReset,
+} from "../../utils//profileUtils";
 
 function Profile() {
   const { user, setUser } = useContext(AuthContext);
@@ -40,7 +43,9 @@ function Profile() {
       setUser(response.data.user);
       setMessage("Profile updated successfully");
     } catch (err) {
-      setError(err.response?.data?.message || "An error occurred. Please try again.");
+      setError(
+        err.response?.data?.message || "An error occurred. Please try again."
+      );
     }
   };
 
@@ -63,7 +68,9 @@ function Profile() {
       });
       setMessage("Password reset successfully");
     } catch (err) {
-      setError(err.response?.data?.message || "An error occurred. Please try again.");
+      setError(
+        err.response?.data?.message || "An error occurred. Please try again."
+      );
     }
   };
 
@@ -72,7 +79,7 @@ function Profile() {
   return (
     <DashboardLayout>
       <h1 className="title">Profile</h1>
-      
+
       {/* Display message or error */}
       {message && <div className="notification is-info">{message}</div>}
       {error && <div className="notification is-danger">{error}</div>}

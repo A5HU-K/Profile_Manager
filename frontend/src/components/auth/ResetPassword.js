@@ -1,28 +1,33 @@
-import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import api from '../utils/api';
+import React, { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import api from "../../utils/api";
 
 function ResetPassword() {
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [error, setError] = useState('');
-  const [message, setMessage] = useState('');
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const { token } = useParams();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setMessage('');
+    setError("");
+    setMessage("");
     if (password !== passwordConfirm) {
-      return setError('Passwords do not match');
+      return setError("Passwords do not match");
     }
     try {
-      const response = await api.patch(`/api/users/auth/resetPassword/${token}`, { password, passwordConfirm });
+      const response = await api.patch(
+        `/api/users/auth/resetPassword/${token}`,
+        { password, passwordConfirm }
+      );
       setMessage(response.data.message);
-      setTimeout(() => navigate('/login'), 3000);
+      setTimeout(() => navigate("/login"), 3000);
     } catch (err) {
-      setError(err.response?.data?.message || 'An error occurred. Please try again.');
+      setError(
+        err.response?.data?.message || "An error occurred. Please try again."
+      );
     }
   };
 
@@ -37,7 +42,9 @@ function ResetPassword() {
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
-              <label htmlFor="password" className="sr-only">New Password</label>
+              <label htmlFor="password" className="sr-only">
+                New Password
+              </label>
               <input
                 id="password"
                 name="password"
@@ -51,7 +58,9 @@ function ResetPassword() {
               />
             </div>
             <div>
-              <label htmlFor="password-confirm" className="sr-only">Confirm New Password</label>
+              <label htmlFor="password-confirm" className="sr-only">
+                Confirm New Password
+              </label>
               <input
                 id="password-confirm"
                 name="password-confirm"
@@ -75,8 +84,12 @@ function ResetPassword() {
             </button>
           </div>
         </form>
-        {error && <p className="mt-2 text-center text-sm text-red-600">{error}</p>}
-        {message && <p className="mt-2 text-center text-sm text-green-600">{message}</p>}
+        {error && (
+          <p className="mt-2 text-center text-sm text-red-600">{error}</p>
+        )}
+        {message && (
+          <p className="mt-2 text-center text-sm text-green-600">{message}</p>
+        )}
       </div>
     </div>
   );
